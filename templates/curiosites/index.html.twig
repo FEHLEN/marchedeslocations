@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CuriositesController!{% endblock %}
+
+{% block body %}
+ {{ include("partials/title.html.twig", {'name':'Toutes les principales curiosités françaises !'}) }}
+<div class="container"> 
+        <div class="formulaire-search">
+           <div class="sidebar">
+              {{ form_start(search)}}
+              <div class="widget">
+                 <h5 class="widget_title">Chercher dans un département</h5>
+                       {{ form_row(search.regions)}}
+              </div>
+              <button class="bouton-annonce">Chercher</button>
+              {{ form_end(search)}}
+           </div>
+        </div>
+        <div class="box_offres">
+            <div  class="flex1">
+               {% for curiosite in curiosites %}                     
+                    <div class="cardBody2">
+                        <div class="picture">
+                            {% if curiosite.image %}<br>
+                                <img src="/assets/uploads/curiosites/{{ curiosite.image }}" width="200" alt="image {{ curiosite.image}}">
+                            {% endif %} 
+                            
+                        </div>
+                        <div class="texte">
+                           <div class="titre">
+                              <h4>{{ curiosite.titre | upper }}</h4>
+                            </div>
+                            <div class="description">
+                                <p><span>Description :</span> {{ curiosite.description }}<br>
+                                {{ curiosite.codePostal}} {{ curiosite.ville }}<br>
+                                <span>Région :</span> {{ curiosite.region.nom }}</p>
+                            </div>
+                            <div class="bouton">
+                               <a href="{{curiosite.adresseHttp}}" class="bouton-annonce" target="_blank">Site Web</a> 
+                            </div>
+                       </div>   
+                        
+                    </div>     
+               {% endfor %} 
+         
+            </div>  
+        </div>
+    </div>
+{% endblock %}

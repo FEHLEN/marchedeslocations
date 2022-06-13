@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les offres de location dans le Hauts de France!{% endblock %}
+
+{% block body %}
+    {{ include("partials/title.html.twig", {'name':'Les offres de locations dans le Hauts de France !'}) }}
+
+    <div class="container">   
+        <div class="box_offres">
+            <div  class="flex1">
+               {% for offre in offreslocations %}                     
+                    <div class="cardBody">
+                        <div class="picture">
+                            {% if offre.OneImage %}<br>
+                                <img src="/assets/uploads/annonces/{{ offre.OneImage }}" width="100" alt="image {{ offre.OneImage}}">
+                            {% endif %} 
+                        </div>
+                        <div class="texte">
+                           <div class="titre">
+                              <h4>{{ offre.titre | upper }}</h4>
+                            </div>
+                            <p>Structure : {{ offre.structure }}<br>
+                            Nbre de chambre : {{ offre.nbreChambres}} <br>
+                            Nbre personnes : {{ offre.nbrePersonnes}} <br>
+                            Tarif Hors Saison / jour : {{ offre.tarifHorsSaison}} € <br>
+                            Tarif Pleine Saison / jour : {{ offre.tarifPleineSaison}} €<br>
+                            {{ offre.codePostal}} {{ offre.ville }}<br>
+                            Département : {{ offre.departement}} <br>
+                            Région : {{ offre.regions.nom }}</p>
+                        </div>   
+                        <div class="bouton">
+                            <a href="{{ path('app_hautsdefranceDetail', {'id':offre.id}) }}" class="bouton-annonce">Détails</a>      
+                        </div>
+                    </div>     
+               {% endfor %} 
+         
+            </div>  
+        </div>
+    </div>
+
+{% endblock %}
+

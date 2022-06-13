@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Annonces{% endblock %}
+
+{% block body %}
+   <div class="container">
+        <div class="details" id="annonces">
+            <div class="card mb-3 mb-lg-0">
+                <div class="card-header">
+                    <h3> Votre Annonce en détail</h3>
+                </div>
+                <div class="card-body">
+                    <address> {{ offreslocation.titre | upper }}<br>
+                        Structure : {{ offreslocation.structure }} <br>
+                        Nbre de chambre : {{ offreslocation.nbreChambres}} <br>
+                        Nbre personnes : {{ offreslocation.nbrePersonnes}} <br>
+                        Description : {{ offreslocation.description}}<br>
+                        Tarif Hors Saison : {{ offreslocation.tarifHorsSaison}} <br>
+                        Tarif Pleine Saison: {{ offreslocation.tarifPleineSaison}}<br>
+                        Lave linge : {{ offreslocation.laveLinge}} -
+                        Parking : {{ offreslocation.parking }}<br>
+                        Douche : {{ offreslocation.douche }} -
+                        Congélateur : {{ offreslocation.congelateur }}<br>
+                        Lave vaisselle : {{ offreslocation.laveVaisselle }}<br>
+                        Télévision : {{ offreslocation.TV }}<br>
+                        Ville : {{ offreslocation.ville }}<br>
+                        Code Postal : {{ offreslocation.codePostal}}<br>
+                        Département : {{ offreslocation.departement}} <br>
+                        Région : {{ offreslocation.regions.nom }}
+                        <div class="row">
+                            {% if offreslocation.OneImage %}
+                                <div class="image">
+                                    <h3>Image 1</h3>
+                                    <img src="../assets/uploads/annonces/{{ offreslocation.OneImage}}" width="80" alt="image de l'hébergement">
+                                </div> 
+                            {% endif %}
+                            {% if offreslocation.TwoImage %}
+                                <div class="image">
+                                    <h3>Image 2</h3>
+                                    <img src="../assets/uploads/annonces/{{ offreslocation.TwoImage}}" width="80" alt="image de l'hébergement">
+                                </div> 
+                             {% endif %}
+                        </div>                   
+                    <address>
+                    <a href="{{path('app_compte')}}" class="bouton-annonce">Retour</a>
+                                               
+                                            
+                </div>     
+            </div>
+        </div>
+    </div>  
+{% endblock %}

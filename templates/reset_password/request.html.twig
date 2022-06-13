@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reset your password{% endblock %}
+
+{% block body %}
+    {% for flash_error in app.flashes('reset_password_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+    {{ include("partials/title.html.twig", {'name':'Première étape !'}) }}
+    <h1>Confirmez votre adresse mail</h1>
+    <div id="contient">
+        {{ form_start(requestForm) }}
+            
+            {{ form_row(requestForm.email) }}
+        
+            <div>
+                <small>
+                    Entrer votre adresse mail relative à votre compte chez Le Marché des Locations, et vous pourrez réinitialiser votre mot de passe.
+                </small>
+            </div>
+
+            <button class="btn btn-primary">Envoyer votre email</button>
+        {{ form_end(requestForm) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail de votre annonce !{% endblock %}
+{% block body %}
+{{ include("partials/title.html.twig", {'name':'Voici les détails'}) }}
+   <div class="item row">
+       <div class="detail_img col-12 col-md-3 col-lg-4">
+            {% if offre.OneImage %}<br>
+                <img src="/assets/uploads/annonces/{{ offre.OneImage }}" width="400" alt="image {{ offre.OneImage}}">
+            {% endif %} 
+             {% if offre.TwoImage %}<br>
+                <img src="/assets/uploads/annonces/{{ offre.TwoImage }}" width="400" alt="image {{ offre.TwoImage}}">
+            {% endif %} 
+          
+       </div>
+       <div class="detail_info col-12 col-md-9 col-lg-8">
+           <h4 class="detail_titre">{{ offre.titre }}</h4>
+           <p> Nbre de chambre : {{ offre.nbreChambres}} <br>
+               Nbre personnes : {{ offre.nbrePersonnes}}
+           <div class="detail_prices">
+               <span class="price">Haute Saison : {{ offre.tarifHorsSaison}} €</span>
+               <span class="price">Basse Saison : {{ offre.tarifPleineSaison}} €</span>
+           </div>
+           <div class="detail_description">
+             <p>Description : {{ offre.description}}</p>
+           </div>
+           <div class="detail_commodités">
+             <p>Lave linge : {{ offre.laveLinge}} -
+                Parking : {{ offre.parking }}<br>
+                Douche : {{ offre.douche }} -
+                Congélateur : {{ offre.congelateur }}<br>
+                Lave vaisselle : {{ offre.laveVaisselle }}<br>
+                Télévision : {{ offre.TV }}
+           </div>
+           <div class="detail_localité">
+             <p>Ville : {{ offre.ville }}<br>
+                Code Postal : {{ offre.codePostal}}<br>
+                Département : {{ offre.departement}} <br>
+                Région : {{ offre.regions.nom }}
+           </div>
+           <a href="{{path('app_regions_grandest')}}" class="bouton-annonce">Retour</a>
+       </div>
+     
+   </div>
+
+
+{% endblock %}

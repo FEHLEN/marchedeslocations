@@ -1,0 +1,9 @@
+<h1>Le Marché des Locations. Bonjour!</h1>
+
+<p>Pour réinitialiser votre mot de passe, merci de cliquer sur ce lien, vous serez redirigé vers le site officiel.</p>
+
+<a href="{{ url('app_reset_password', {token: resetToken.token}) }}">{{ url('app_reset_password', {token: resetToken.token}) }}</a>
+
+<p>Ce lien expire dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
+
+<p>A tout de suite!</p>

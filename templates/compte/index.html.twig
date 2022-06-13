@@ -1,0 +1,161 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre Compte Utilisateur!{% endblock %}
+
+{% block body %}
+
+ {{ include("partials/title.html.twig", {'name':'Vous êtes sur votre compte !'}) }}
+  <div class="section" id="index">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-4">
+                <div class="dashboard_menu">
+                    <ul class="nav nav-tabs flex-column">
+                      <li class="nav-item">
+                        <a class="nav-link active" id="dashboard-tab" href="#dashboard">Tableau Bord</a>
+                      </li>
+                      
+                      <li class="nav-item">
+                        <a class="nav-link" id="annonces-tab"  href="#annonces">Mon Annonces</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="account-detail-tab" data-toggle="tab" href="#account-detail" role="tab" aria-controls="account-detail" aria-selected="true">Détails</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_logout')}}">Déconnexion</a>
+                      </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="contient col-lg-9 col-md-8">
+                {% for message in app.flashes('address_message') %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert"> {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+                <div class="dashboard_content">
+                      <div  id="dashboard">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Bonjour {{ app.user.firstname | upper }}  {{ app.user.lastname | upper}}</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>Avec votre tableau de bord. vous pouvez facilement choisir &amp; visualiser vos annonces, gérer vos images et changer votre mot de passe, afficher les détails de votre compte</p>                      
+                            </div>
+                        </div>
+                      </div>
+                </div>    
+                <div id="annonces" >
+                    <div class="row">
+                            <div class="col-lg-12">
+                                <a href="{{path('app_offreslocations_new')}}" class="bouton-annonce">Ajoutez une nouvelle annonce</a>
+                            </div>
+                    </div>
+                    <div class="row">
+                           {% if app.user.offreslocations %}
+                               {% set index = 0 %}
+                               {% for offre in app.user.offreslocations %}
+                                  {% set index = index +1 %}
+                                    <div class="col-lg-6">
+                                        <div class="card mb-3 mb-lg-0">
+                                            <div class="card-header">
+                                                <h3> Votre Annonce n° {{ index }}</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <address> {{ offre.titre | upper }}<br>
+                                                    Structure : {{ offre.structure }} <br>
+                                                    Nbre de chambre : {{ offre.nbreChambres}} <br>
+                                                    Nbre personnes : {{ offre.nbrePersonnes}} <br>
+                                                    Description : {{ offre.description}}<br>
+                                                    Tarif Hors Saison : {{ offre.tarifHorsSaison}} <br>
+                                                    Tarif Pleine Saison: {{ offre.tarifPleineSaison}}<br>
+                                                    Lave linge : {{ offre.laveLinge}} -
+                                                    Parking : {{ offre.parking }}<br>
+                                                    Douche : {{ offre.douche }} -
+                                                    Congélateur : {{ offre.congelateur }}<br>
+                                                    Lave vaisselle : {{ offre.laveVaisselle }}<br>
+                                                    Télévision : {{ offre.TV }}<br>
+                                                    Ville : {{ offre.ville }}<br>
+                                                    Code Postal : {{ offre.codePostal}}<br>
+                                                    Téléphone : {{ offre.tel }}<br>
+                                                    Département : {{ offre.departement}} <br>
+                                                    Région : {{ offre.regions.nom }}
+                                                    {% if offre.OneImage %}
+                                                        <h3>Image 1</h3>
+                                                        <img src="../assets/uploads/annonces/{{ offre.OneImage }}" width="80" alt="image {{ offre.OneImage}}">
+                                                    {% else %}
+                                                      <p>Vous n'avez pas d'image 1</p>
+                                                    {% endif %}     
+                                                    {% if offre.TwoImage %}
+                                                        <h3>Image 2</h3>
+                                                        <img src="../assets/uploads/annonces/{{ offre.TwoImage }}" width="80" alt="image {{ offre.TwoImage}}">
+                                                    {% else %}
+                                                      <p>Vous n'avez pas d'image 2</p>
+                                                    {% endif %}
+                                                </address>
+                                                
+                                                <div class="btn-group">
+                                                    <a href="{{path('app_offreslocations_edit', {'id':offre.id})}}" class="bouton-annonce">Changer</a>
+                                                     {{ include('offreslocations/_delete_form.html.twig') }}        
+                                                </div>
+                                            
+                                            </div>     
+                                        </div>
+                                    </div>  
+                                {% endfor %}   
+                            {% else %}
+                            <p>Nous n'avons pas trouver d'annonce vous concernant, alors postez en une !</p>
+                            {% endif %}     
+                    </div>
+                </div>
+                <div class="tab-details" id="account-detail" >
+                    <div class="card">
+                        <div class="card-header">
+                                <h3>Compte Détails</h3>
+                        </div>
+                        <div class="card-body">
+                                <p>Partant pour faire des changements sur votre compte !</p>
+                            <form method="post" name="enq">
+                                <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label>Prénom <span class="required">*</span></label>
+                                            <input required="" value="{{ app.user.firstname }}" class="form-control" name="name" type="text">
+                                         </div>
+                                         <div class="form-group col-md-6">
+                                            <label>Nom <span class="required">*</span></label>
+                                            <input required="" value="{{ app.user.lastname }}" class="form-control" name="phone">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label>Adresse mail <span class="required">*</span></label>
+                                            <input required="" value="{{ app.user.email }}" class="form-control" name="email" type="email">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label>Actuel mot de passe <span class="required">*</span></label>
+                                            <input required="" class="form-control" name="password" type="password">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label>Nouveau mot de passe <span class="required">*</span></label>
+                                            <input required="" class="form-control" name="npassword" type="password">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label>Confirmer mot de passe <span class="required">*</span></label>
+                                            <input required="" class="form-control" name="cpassword" type="password">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn btn-fill-out" name="submit" value="Submit">Enregistrer</button>
+                                        </div>
+                                </div>
+                            </form>
+                            
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+  </div>
+
+{% endblock %}
